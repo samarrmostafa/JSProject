@@ -45,12 +45,28 @@
   ],
   "products": [
     {
-      "id": "1",
-      "sellerId": 2,
-      "name": "Product 1",
-      "price": 99.99,
-      "category": "electronics",
-      "approved": true
+      "id": "fc30",
+      "name": "horse",
+      "price": 100,
+      "category": "animals",
+      "image": "https://as1.ftcdn.net/v2/jpg/02/44/22/96/1000_F_244229673_NJ9glLa13UImAWZPqIgmj0uLDRD8F3hT.jpg",
+      "status": "pending"
+    },
+    {
+      "id": "7e76",
+      "name": "duck",
+      "price": 10,
+      "category": "animals",
+      "image": "https://th.bing.com/th/id/OIP.sNz9jKxW2WY16si5Vt7NLAHaKK?cb=iwp1&rs=1&pid=ImgDetMain",
+      "status": "pending"
+    },
+    {
+      "id": "f024",
+      "name": "cat",
+      "price": 20,
+      "category": "animals",
+      "image": "https://th.bing.com/th/id/OIP.M-5ruDumHIwe6KvvYl1vBwHaEo?cb=iwp1&rs=1&pid=ImgDetMain",
+      "status": "pending"
     }
   ],
   "orders": [
