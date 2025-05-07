@@ -1,3 +1,8 @@
+
+
+
+
+
 document.addEventListener('DOMContentLoaded', async function() {
     const baseUrl = 'http://localhost:3000';
     
@@ -78,25 +83,169 @@ document.addEventListener('DOMContentLoaded', async function() {
         productTable.innerHTML = productsToDisplay.map(product => `
             <tr>
                 <td>${product.id}</td>
-                <td><img src="https://via.placeholder.com/40" alt="Product Image"></td>
+                <td><img src="${product.image || 'https://via.placeholder.com/40'}" alt="Product Image" width="40"></td>
                 <td>${product.name}</td>
-                <td>${getUserName(product.sellerId)}</td>
+                <td>${product.sellerId ? getUserName(product.sellerId) : 'Unknown'}</td>
                 <td>${product.category}</td>
                 <td>$${product.price}</td>
-                <td><span class="status ${product.approved ? 'approved' : 'pending'}">${product.approved ? 'Approved' : 'Pending'}</span></td>
+                <td><span class="status ${product.status === 'approved' ? 'approved' : product.status === 'denied' ? 'denied' : 'pending'}">
+                    ${product.status === 'approved' ? 'Approved' : product.status === 'denied' ? 'Denied' : 'Pending'}
+                </span></td>
                 <td>
-                    ${product.approved ? 
-                        `<button class="edit-btn"><i class="fas fa-edit"></i></button>
-                         <button class="delete-btn"><i class="fas fa-trash"></i></button>` :
-                        `<button class="approve-btn"><i class="fas fa-check"></i></button>
-                         <button class="reject-btn"><i class="fas fa-times"></i></button>
-                         <button class="edit-btn"><i class="fas fa-edit"></i></button>`
+                    ${product.status === 'pending' ? 
+                        `<button class="approve-btn" data-id="${product.id}"><i class="fas fa-check"></i></button>
+                         <button class="reject-btn" data-id="${product.id}"><i class="fas fa-times"></i></button>` :
+                        `<button class="edit-btn" data-id="${product.id}"><i class="fas fa-edit"></i></button>
+                         <button class="delete-btn" data-id="${product.id}"><i class="fas fa-trash"></i></button>`
                     }
                 </td>
             </tr>
         `).join('');
     }
+document.querySelector('#products tbody').addEventListener('click', async (e) => {
+    const approveBtn = e.target.closest('.approve-btn');
+    const rejectBtn = e.target.closest('.reject-btn');
     
+    if (approveBtn) {
+        const productId = approveBtn.dataset.id;
+        await updateProductStatus(productId, 'approved');
+    } else if (rejectBtn) {
+        const productId = rejectBtn.dataset.id;
+        await updateProductStatus(productId, 'denied');
+    }
+});
+
+async function updateProductStatus(productId, newStatus) {
+    try {
+        const response = await fetch(`http://localhost:3000/products/${productId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: newStatus })
+        });
+        
+        if (response.ok) {
+            const products = await (await fetch('http://localhost:3000/products')).json();
+            displayProducts(products);
+            
+            document.querySelector('.card-icon.products + .card-info p').textContent = products.length;
+        }
+    } catch (error) {
+        console.error('Error updating product status:', error);
+        alert('Failed to update product status');
+    }
+}
+document.querySelector('#productsTable tbody').addEventListener('click', async (e) => {
+    const deleteBtn = e.target.closest('.delete-btn');
+    const editBtn = e.target.closest('.edit-btn');
+
+    if (deleteBtn) {
+        const productId = deleteBtn.dataset.id;
+    
+        Swal.fire({
+            title: 'Are You Sure ? ',
+            text: " The Products Will be Deleted permanently ",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'yes',
+            cancelButtonText: 'No'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    await fetch(`http://localhost:3000/products/${productId}`, {
+                        method: 'DELETE'
+                    });
+                    const products = await (await fetch('http://localhost:3000/products')).json();
+                    displayProducts(products);
+    
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Deleted',
+                        text: 'the product deleted successfully'
+                    });
+                } catch (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'An unexpected error has occurred'
+                    });
+                }
+            }
+        });
+    }
+    
+
+    if (editBtn) {
+        const productId = editBtn.dataset.id;
+        const response = await fetch(`http://localhost:3000/products/${productId}`);
+        const product = await response.json();
+
+    
+        Swal.fire({
+            title: 'تعديل المنتج',
+            html:
+                `<input id="swal-name" class="swal2-input" placeholder="اسم المنتج" value="${product.name}">
+                 <input id="swal-price" type="number" class="swal2-input" placeholder="السعر" value="${product.price}">
+                 <input id="swal-category" class="swal2-input" placeholder="الفئة" value="${product.category}">`,
+            focusConfirm: false,
+            showCancelButton: true,
+            confirmButtonText: 'save',
+            cancelButtonText: 'cancel',
+            preConfirm: () => {
+                const name = document.getElementById('swal-name').value.trim();
+                const price = parseFloat(document.getElementById('swal-price').value);
+                const category = document.getElementById('swal-category').value.trim();
+        
+                if (!name || isNaN(price) || !category) {
+                    Swal.showValidationMessage('Please enter the info . correctly');
+                    return false;
+                }
+        
+                return { name, price, category };
+            }
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const { name, price, category } = result.value;
+        
+                await fetch(`http://localhost:3000/products/${productId}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, price, category })
+                });
+        
+                const updatedProducts = await (await fetch(`http://localhost:3000/products`)).json();
+                displayProducts(updatedProducts);
+        
+                Swal.fire({
+                    icon: 'success',
+                    title: 'updated',
+                    text: 'Product updated successfully'
+                });
+            }
+        });
+        
+    }
+});
+
+document.querySelectorAll('.product-tabs .tab-btn').forEach(btn => {
+    btn.addEventListener('click', async function() {
+        document.querySelectorAll('.product-tabs .tab-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        
+        const tab = this.dataset.tab;
+        const products = await (await fetch('http://localhost:3000/products')).json();
+        
+        if (tab === 'pending') {
+            const pendingProducts = products.filter(p => p.status === 'pending');
+            displayProducts(pendingProducts);
+            this.textContent = `Pending Approval (${pendingProducts.length})`;
+        } else {
+            displayProducts(products);
+        }
+    });
+});
+
     function displayOrders(ordersToDisplay) {
         const orderTable = document.querySelector('#orders tbody');
         orderTable.innerHTML = ordersToDisplay.map(order => `
@@ -286,7 +435,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 document.addEventListener('DOMContentLoaded', async function() {
     const baseUrl = 'http://localhost:3000';
     
-    // إعدادات الترقيم العامة
     const paginationConfig = {
         users: {
             tableId: 'users',
@@ -305,14 +453,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     };
 
-    // جلب جميع البيانات
     const [users, products, orders] = await Promise.all([
         fetch(`${baseUrl}/users`).then(res => res.json()),
         fetch(`${baseUrl}/products`).then(res => res.json()),
         fetch(`${baseUrl}/orders`).then(res => res.json())
     ]);
 
-    // دالة عرض موحدة للترقيم
     function setupPagination(dataType, data) {
         const config = paginationConfig[dataType];
         const table = document.querySelector(`#${config.tableId} tbody`);
@@ -358,7 +504,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </tr>
                     `;
                 }
-                // يمكنك إضافة بناء الجدول للطلبات هنا
             }).join('');
         }
 
@@ -389,10 +534,18 @@ document.addEventListener('DOMContentLoaded', async function() {
         updatePagination();
     }
 
-    // تهيئة الترقيم لجميع الجداول
     setupPagination('users', users);
     setupPagination('products', products);
     setupPagination('orders', orders);
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetchProducts();
+});
+
+
+
+//-------------------------------------------------------------
 
 
