@@ -1,5 +1,4 @@
 
-
 window.addEventListener('load', function () {
     const registerName = document.getElementById('registerName');
     const registerEmail = document.getElementById('registerEmail');
@@ -42,9 +41,30 @@ window.addEventListener('load', function () {
                           validateRole();
 
         if (isFormValid) {
+
+            const emailExists = await checkEmailExists(registerEmail.value.trim());
+            if (emailExists) {
+                emailError.textContent = 'the email is already exists';
+                emailError.style.display = 'block';
+                registerEmail.style.border = '2px solid red';
+                return;
+            }
+            
             await registerUser();
         }
     });
+
+    async function checkEmailExists(email) {
+        try {
+            const response = await fetch('http://localhost:3000/users'); 
+            const data = await response.json();
+            return data.some(user => user.email.toLowerCase() === email.toLowerCase());
+        } catch (error) {
+            console.error('Error checking email:', error);
+            return false;
+        }
+    }
+    
 
     function validateName() {
         const valid = isValidName(registerName.value.trim());
@@ -91,10 +111,8 @@ window.addEventListener('load', function () {
                 id: Date.now().toString()
             };
 
-            // تخزين بيانات المستخدم في localStorage
             localStorage.setItem('currentUser', JSON.stringify(userData));
 
-            // توجيه المستخدم بناءً على الـ role
             if (userData.role === 'customer') {
                 window.location.href = 'index.html';
             } else if (userData.role === 'seller') {
@@ -103,66 +121,7 @@ window.addEventListener('load', function () {
 
         } catch (error) {
             console.error('Error:', error);
-            alert('حدث خطأ أثناء التسجيل، يرجى المحاولة مرة أخرى');
+            alert('Error , try again');
         }
     }
 });
-
-// window.addEventListener('load', function () {
-//     const registerName = document.getElementById('registerName');
-//     const registerEmail = document.getElementById('registerEmail');
-//     const registerPassword = document.getElementById('registerPassword');
-//     const confirmPassword = document.getElementById('confirmPassword');
-//     const userRole = document.getElementById('userRole');
-//     const form = document.getElementById('registerForm');
-
-//     const nameError = document.getElementById('nameError');
-//     const emailError = document.getElementById('emailError');
-//     const passError = document.getElementById('passError');
-//     const confirmError = document.getElementById('confirmError');
-//     const roleError = document.getElementById('roleError');
-
-//     const isValidName = (n) => /^[A-Za-z]{4,6}$/.test(n);
-//     const isValidEmail = (e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
-//     const isValidPassword = (p) => /^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(p);
-
-//     // ... (جميع دوال التحقق مثل validateName و validateEmail تبقى كما هي)
-
-//     async function registerUser() {
-//         try {
-//             const userData = {
-//                 name: registerName.value.trim(),
-//                 email: registerEmail.value.trim(),
-//                 password: registerPassword.value.trim(),
-//                 role: userRole.value,
-//                 id: Date.now().toString()
-//             };
-
-//             // التحقق من تكرار الإيميل في localStorage
-//             const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
-//             const emailExists = existingUsers.some(user => user.email === userData.email);
-
-//             if (emailExists) {
-//                 alert('هذا الإيميل مسجل بالفعل!');
-//                 registerEmail.style.border = '2px solid red';
-//                 emailError.textContent = 'الإيميل موجود مسبقاً';
-//                 emailError.style.display = 'block';
-//                 return;
-//             }
-
-//             // حفظ المستخدم الجديد في localStorage
-//             existingUsers.push(userData);
-//             localStorage.setItem('users', JSON.stringify(existingUsers));
-//             localStorage.setItem('currentUser', JSON.stringify(userData));
-
-//             // التوجيه بناءً على الدور
-//             window.location.href = userData.role === 'customer' ? 'index.html' : 'seller.html';
-
-//         } catch (error) {
-//             console.error('Error:', error);
-//             alert('حدث خطأ أثناء التسجيل. الرجاء المحاولة لاحقًا.');
-//         }
-//     }
-
-//     // ... (بقية الأكواد مثل event listeners)
-// });
