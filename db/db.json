@@ -1,0 +1,67 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "role": "admin",
+      "name": "Admin mm",
+      "email": "mmmm@example.com",
+      "password": "hashed_password_123"
+    },
+    {
+      "id": "2",
+      "role": "seller",
+      "name": "Seller 1",
+      "email": "seller1@example.com",
+      "password": "hashed_password_456"
+    },
+    {
+      "id": "7ee4",
+      "name": "Admin mm",
+      "email": "mmmm@example.com",
+      "role": "seller",
+      "password": "3245"
+    },
+    {
+      "id": "6865",
+      "name": "Admin mm",
+      "email": "mmmm@example.com",
+      "role": "customer",
+      "password": "3454"
+    },
+    {
+      "id": "c2a1",
+      "name": "ةة",
+      "email": "mmmm@example.com",
+      "role": "seller",
+      "password": "8790"
+    },
+    {
+      "id": "b757",
+      "name": "ؤلبا",
+      "email": "mmmm@example.com",
+      "role": "customer",
+      "password": "45687"
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "sellerId": 2,
+      "name": "Product 1",
+      "price": 99.99,
+      "category": "electronics",
+      "approved": true
+    }
+  ],
+  "orders": [
+    {
+      "id": "1",
+      "customerId": 3,
+      "products": [
+        1,
+        2
+      ],
+      "status": "pending"
+    }
+  ]
+}
