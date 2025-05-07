@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Herfah</title>
+  <link rel="stylesheet" href="./css/index.css"/>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Herfah</div>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <nav class="nav-links" id="navLinks">
+      <a href="#">Home</a>
+      <a href="#">Categories</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
+    <div class="search-bar">
+      <input type="text" placeholder="Search..." />
+    </div>
+  </header>
+ 
+  <div class="slider-container">
+    <div class="slider">
+        <!-- Slide 1 (active by default) -->
+        <div class="slide active">
+            <div class="slide-content">
+                <!-- Your content here -->
+            </div>
+            <img src="./images/slider1.jpg" alt="Slider Image 1">
+        </div>
+        
+        <!-- Slide 2 -->
+        <div class="slide">
+            <div class="slide-content">
+                <!-- Your content here -->
+            </div>
+            <img src="./images/slider2.jpg" alt="Slider Image 2">
+        </div>
+        
+        <!-- Slide 3 -->
+        <div class="slide">
+            <div class="slide-content">
+                <!-- Your content here -->
+            </div>
+            <img src="./images/slider3.jpg" alt="Slider Image 3">
+        </div>
+    </div>
+    
+    <!-- Navigation buttons -->
+    <button class="slider-btn prev-btn" id="prev">&#10094;</button>
+    <button class="slider-btn next-btn" id="next">&#10095;</button>
+    
+    <!-- Dots navigation -->
+    <div class="slider-dots" id="dots"></div>
+</div>
+  <section class="hero-section">
+    <div class="hero-text">
+      <span class="highlight">"Lets shop to Herfah</span>
+      <h3>this is the best way</h3>
+      <p>Buy & Sell</p>
+    </div>
+    <div class="shuffle-grid" id="shuffleGrid"></div>
+  </section>
+  <footer class="smart-footer">
+    <div class="footer-box">
+      <div>
+        <h2>Herfah</h2>
+        <p>Crafted with care & creativity.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Categories</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      
+      
+      <div>
+        <h4>Follow Us</h4>
+        <p class="icons">🌐 🐦 📸 💼</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Herfah. All rights reserved.</p>
+    </div>
+  </footer>
+  
+ <script src="./js/index.js"></script>
+ <script src="./js/slider.js"></script>
+</body>
+</html>
