@@ -1,13 +1,6 @@
 {
   "users": [
     {
-      "id": "1",
-      "role": "admin",
-      "name": "Admin mm",
-      "email": "mmmm@example.com",
-      "password": "hashed_password_123"
-    },
-    {
       "id": "2",
       "role": "seller",
       "name": "Seller 1",
@@ -15,32 +8,11 @@
       "password": "hashed_password_456"
     },
     {
-      "id": "7ee4",
-      "name": "Admin mm",
-      "email": "mmmm@example.com",
-      "role": "seller",
-      "password": "3245"
-    },
-    {
-      "id": "6865",
-      "name": "Admin mm",
-      "email": "mmmm@example.com",
-      "role": "customer",
-      "password": "3454"
-    },
-    {
-      "id": "c2a1",
-      "name": "ةة",
-      "email": "mmmm@example.com",
-      "role": "seller",
-      "password": "8790"
-    },
-    {
-      "id": "b757",
-      "name": "ؤلبا",
-      "email": "mmmm@example.com",
-      "role": "customer",
-      "password": "45687"
+      "id": "e502",
+      "name": "doaa",
+      "email": "doaa040@gmail.com",
+      "role": "admin",
+      "password": "1223"
     }
   ],
   "products": [
@@ -50,23 +22,23 @@
       "price": 100,
       "category": "animals",
       "image": "https://as1.ftcdn.net/v2/jpg/02/44/22/96/1000_F_244229673_NJ9glLa13UImAWZPqIgmj0uLDRD8F3hT.jpg",
-      "status": "pending"
+      "status": "approved"
     },
     {
       "id": "7e76",
-      "name": "duck",
-      "price": 10,
-      "category": "animals",
+      "name": "duckk",
+      "price": 12,
+      "category": "animal",
       "image": "https://th.bing.com/th/id/OIP.sNz9jKxW2WY16si5Vt7NLAHaKK?cb=iwp1&rs=1&pid=ImgDetMain",
-      "status": "pending"
+      "status": "approved"
     },
     {
-      "id": "f024",
-      "name": "cat",
-      "price": 20,
-      "category": "animals",
-      "image": "https://th.bing.com/th/id/OIP.M-5ruDumHIwe6KvvYl1vBwHaEo?cb=iwp1&rs=1&pid=ImgDetMain",
-      "status": "pending"
+      "id": "c67e",
+      "name": "loly",
+      "price": 66,
+      "category": "toys",
+      "image": "https://th.bing.com/th/id/OIP.s21tOHnQn8v9ZKXqUjqPTgHaHa?cb=iwp1&rs=1&pid=ImgDetMain",
+      "status": "denied"
     }
   ],
   "orders": [
