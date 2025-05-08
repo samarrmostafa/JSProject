@@ -79,5 +79,139 @@
       ],
       "status": "pending"
     }
+  ],
+  "categories": [
+    {
+      "name": "Home Decor",
+      "subcategories": [
+        {
+          "name": "Crochet Tablecloths",
+          "images": ["img/crochet6.jpg", "img/crochet5.jpg", "img/crochet4.jpg" ,"img/crochet1.jpg", "img/corchet2.jpg", "img/cochet3.jpg"]
+        },
+        {
+          "name": "Decorative Stands",
+          "images": ["img/stand1.jpg", "img/stand2.jpg", "img/stand3.jpg", "img/stand4.jpg", "img/stand5.jpg", "img/stand6.jpg"]
+        },
+        {
+          "name": "Clay Holders",
+          "images": ["img/Clay Holders1.jpg", "img/Clay Holders2.jpg", "img/Clay Holders3.jpg", "img/Clay Holders4.jpg", "img/Clay Holders5.jpg", "img/Clay Holders6.jpg"]
+        },
+        {
+          "name": "Handmade Lighting",
+          "images": ["img/Handmade Lighting1.jpg", "img/Handmade Lighting2.jpg", "img/Handmade Lighting3.jpg", "img/Handmade Lighting4.jpg", "img/Handmade Lighting5.jpg", "img/Handmade Lighting6.jpeg"]
+        }
+      ]
+    },
+    {
+      "name": "Accessories",
+      "subcategories": [
+        {
+          "name": "Bracelets",
+          "images": ["img/bracelets1.jpg", "img/bracelets2.jpg", "img/bracelets3.jpg" , "img/bracelets4.jpg", "img/bracelets5.jpg", "img/bracelets6.jpg"]
+        },
+        {
+          "name": "Necklaces",
+          "images": ["images/necklace1.jpg", "images/necklace2.jpg", "images/necklace3.jpg"]
+        },
+        {
+          "name": "Earrings",
+          "images": ["images/earring1.jpg", "images/earring2.jpg", "images/earring3.jpg"]
+        },
+        {
+          "name": "Rings",
+          "images": ["images/ring1.jpg", "images/ring2.jpg", "images/ring3.jpg"]
+        }
+      ]
+    },
+    {
+      "name": "Leather Products",
+      "subcategories": [
+        {
+          "name": "Wallets",
+          "images": ["images/wallet1.jpg", "images/wallet2.jpg", "images/wallet3.jpg"]
+        },
+        {
+          "name": "Handbags",
+          "images": ["images/handbag1.jpg", "images/handbag2.jpg", "images/handbag3.jpg"]
+        },
+        {
+          "name": "Belts",
+          "images": ["images/belt1.jpg", "images/belt2.jpg", "images/belt3.jpg"]
+        }
+      ]
+    },
+    {
+      "name": "Gifts & Occasions",
+      "subcategories": [
+        {
+          "name": "Birthday Gifts",
+          "images": ["images/birthday1.jpg", "images/birthday2.jpg", "images/birthday3.jpg"]
+        },
+        {
+          "name": "Gift Wrapping",
+          "images": ["images/wrapping1.jpg", "images/wrapping2.jpg", "images/wrapping3.jpg"]
+        },
+        {
+          "name": "Wooden Gift Boxes",
+          "images": ["images/box1.jpg", "images/box2.jpg", "images/box3.jpg"]
+        },
+        {
+          "name": "Handmade Greeting Cards",
+          "images": ["images/card1.jpg", "images/card2.jpg", "images/card3.jpg"]
+        }
+      ]
+    },
+    {
+      "name": "Wood Crafts",
+      "subcategories": [
+        {
+          "name": "Wall Art",
+          "images": ["images/wallart1.jpg", "images/wallart2.jpg", "images/wallart3.jpg"]
+        },
+        {
+          "name": "Light Houses",
+          "images": ["images/lighthouse1.jpg", "images/lighthouse2.jpg", "images/lighthouse3.jpg"]
+        },
+        {
+          "name": "Small Storage Units",
+          "images": ["images/storage1.jpg", "images/storage2.jpg", "images/storage3.jpg"]
+        }
+      ]
+    },
+    {
+      "name": "Sewing & Embroidery",
+      "subcategories": [
+        {
+          "name": "Cushion Covers",
+          "images": ["images/cushion1.jpg", "images/cushion2.jpg", "images/cushion3.jpg"]
+        },
+        {
+          "name": "Hand Embroidered Clothing",
+          "images": ["images/clothing1.jpg", "images/clothing2.jpg", "images/clothing3.jpg"]
+        },
+        {
+          "name": "Embroidered Fabric Bags",
+          "images": ["images/bag1.jpg", "images/bag2.jpg", "images/bag3.jpg"]
+        }
+      ]
+    },
+    {
+      "name": "Natural Candles & Soaps",
+      "subcategories": [
+        {
+          "name": "Scented Candles",
+          "images": ["images/candle1.jpg", "images/candle2.jpg", "images/candle3.jpg"]
+        },
+        {
+          "name": "Natural Oil Soaps",
+          "images": ["images/soap1.jpg", "images/soap2.jpg", "images/soap3.jpg"]
+        },
+        {
+          "name": "Gift Sets",
+          "images": ["images/giftset1.jpg", "images/giftset2.jpg", "images/giftset3.jpg"]
+        }
+      ]
+    }
   ]
+ 
 }

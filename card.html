@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Cart</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #6e3b3b;
+    }
+
+    .cart-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .card {
+      width: 220px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .card-details {
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    .card-details .rating,
+    .card-details .views {
+      font-size: 14px;
+      color: #777;
+      margin: 4px 0;
+    }
+
+    .card button {
+      padding: 6px 12px;
+      background: #c62828;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.3s;
+    }
+
+    .card button:hover {
+      background: #b71c1c;
+    }
+
+    .empty-message {
+      text-align: center;
+      color: #777;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🛒 My Cart</h1>
+  <div class="cart-container" id="cart-container"></div>
+
+  <script>
+    const cartContainer = document.getElementById('cart-container');
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+    if (cartItems.length === 0) {
+      cartContainer.innerHTML = '<div class="empty-message">Your cart is empty.</div>';
+    } else {
+      cartItems.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+
+        const image = document.createElement('img');
+        image.src = item.img;
+        image.alt = item.name;
+
+        const details = document.createElement('div');
+        details.classList.add('card-details');
+
+        const name = document.createElement('div');
+        name.textContent = item.name;
+        name.style.fontWeight = 'bold';
+        name.style.marginBottom = '6px';
+
+        const rating = document.createElement('div');
+        rating.classList.add('rating');
+        rating.textContent = `★ ${item.rating}`;
+
+        const views = document.createElement('div');
+        views.classList.add('views');
+        views.textContent = `👁️ ${item.views} views`;
+
+        const button = document.createElement('button');
+        button.textContent = 'Remove from Cart';
+        button.addEventListener('click', () => {
+          cartItems.splice(index, 1);
+          localStorage.setItem('cartItems', JSON.stringify(cartItems));
+          location.reload(); // تحديث الصفحة
+        });
+
+        details.appendChild(name);
+        details.appendChild(rating);
+        details.appendChild(views);
+        card.appendChild(image);
+        card.appendChild(details);
+        card.appendChild(button);
+
+        cartContainer.appendChild(card);
+      });
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Category Menu</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    .menu-container {
+      width: 280px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin: 20px;
+      height: fit-content;
+    }
+
+    .menu-title {
+      background: #6e3b3b;
+      color: #fff;
+      padding: 15px;
+      font-weight: bold;
+      text-align: center;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .menu li {
+      background: #fff;
+      margin: 10px 0;
+      padding: 12px 25px;
+      cursor: pointer;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease;
+      position: relative;
+    }
+
+    .menu li:hover {
+      background: #e0f7fa;
+    }
+
+    .submenu {
+      list-style: none;
+      padding: 0;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .submenu.show {
+      display: block;
+    }
+
+    .submenu li {
+      padding: 10px 15px;
+      background: #f9f9f9;
+      margin: 5px 0;
+      border-radius: 6px;
+      cursor: pointer;
+      border-left: 4px solid #80deea;
+    }
+
+    .submenu li:hover {
+      background: #d0f4f7;
+    }
+
+    .images-container {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      gap: 20px;
+    }
+
+    .subcategory-title {
+      width: 100%;
+      font-size: 22px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .card {
+      width: 200px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .card-details {
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    .card-details .rating,
+    .card-details .views {
+      font-size: 14px;
+      color: #777;
+      margin: 4px 0;
+    }
+
+    .card button {
+      padding: 6px 12px;
+      background: #6e3b3b;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.3s;
+    }
+
+    .card button:hover {
+      background: #5a2e2e;
+    }
+  </style>
+</head>
+<body>
+  <div class="menu-container">
+    <div class="menu-title">☰  CATEGORIES</div>
+    <ul id="category-menu" class="menu"></ul>
+  </div>
+
+  <div id="images-container" class="images-container"></div>
+
+  <script>
+    fetch('http://localhost:3000/categories')
+      .then(response => response.json())
+      .then(data => {
+        const menu = document.getElementById('category-menu');
+        const imagesContainer = document.getElementById('images-container');
+
+        data.forEach(category => {
+          const li = document.createElement('li');
+          li.textContent = category.name;
+
+          const submenu = document.createElement('ul');
+          submenu.classList.add('submenu');
+
+          category.subcategories.forEach(sub => {
+            const subLi = document.createElement('li');
+            subLi.textContent = sub.name;
+
+            subLi.addEventListener('click', (e) => {
+              e.stopPropagation();
+              imagesContainer.innerHTML = '';
+
+              const title = document.createElement('div');
+              title.classList.add('subcategory-title');
+              title.textContent = sub.name;
+              imagesContainer.appendChild(title);
+
+              const imageWrapper = document.createElement('div');
+              imageWrapper.classList.add('subcategory-images');
+              imageWrapper.style.display = 'flex';
+              imageWrapper.style.flexWrap = 'wrap';
+              imageWrapper.style.gap = '20px';
+
+              sub.images.forEach(img => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+
+                const image = document.createElement('img');
+                image.src = img;
+                image.alt = sub.name;
+
+                const details = document.createElement('div');
+                details.classList.add('card-details');
+
+                const rating = document.createElement('div');
+                rating.classList.add('rating');
+                rating.textContent = '★ 4.5';
+
+                const views = document.createElement('div');
+                views.classList.add('views');
+                views.textContent = '👁️ 1.2k views';
+
+                const button = document.createElement('button');
+                button.textContent = 'Add to Cart';
+                button.addEventListener('click', () => {
+                  const cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+                  const exists = cart.some(item => item.img === img);
+
+                  if (!exists) {
+                    cart.push({
+                      img: img,
+                      name: sub.name,
+                      rating: 4.5,
+                      views: '1.2k'
+                    });
+                    localStorage.setItem('cartItems', JSON.stringify(cart));
+                    alert('Product added to cart!');
+                  } else {
+                    alert('This product is already in the cart.');
+                  }
+                });
+
+                details.appendChild(rating);
+                details.appendChild(views);
+                card.appendChild(image);
+                card.appendChild(details);
+                card.appendChild(button);
+
+                imageWrapper.appendChild(card);
+              });
+
+              imagesContainer.appendChild(imageWrapper);
+            });
+
+            submenu.appendChild(subLi);
+          });
+
+          li.addEventListener('click', () => {
+            submenu.classList.toggle('show');
+          });
+
+          li.appendChild(submenu);
+          menu.appendChild(li);
+        });
+      })
+      .catch(err => console.error('Failed to fetch data:', err));
+  </script>
+</body>
+</html>
